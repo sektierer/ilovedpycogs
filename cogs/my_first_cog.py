@@ -6,7 +6,19 @@ class MyCog(commands.Cog):
 
     @commands.command()
     async def mycommand(self, ctx):
-        await ctx.send("This is my command!")
+        await ctx.send("пошел нгаухуй")
 
-def setup(bot):
-    bot.add_cog(MyCog(bot))
+    @commands.command()
+    async def ping(self, ctx):
+        await ctx.send(f'Задержка бота: {round(self.bot.latency)}ms')
+    
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author == self.bot.user:
+            return
+        
+        if message.content == "ping":
+            await message.channel.send("pong")
+
+async def setup(bot):
+    await bot.add_cog(MyCog(bot))
